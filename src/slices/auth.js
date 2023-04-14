@@ -8,7 +8,7 @@ if (typeof window !== "undefined") {
   user = false;
 }
 
-export const register = createAsyncThunk(
+export const signUp = createAsyncThunk(
   "auth/register",
   async ({ username, password, email, authoritie }, thunkAPI) => {
     try {
@@ -68,10 +68,10 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   extraReducers: {
-    [register.fulfilled]: (state, action) => {
+    [signUp.fulfilled]: (state, action) => {
       state.isLoggedIn = false;
     },
-    [register.rejected]: (state, action) => {
+    [signUp.rejected]: (state, action) => {
       state.isLoggedIn = false;
     },
     [login.fulfilled]: (state, action) => {
