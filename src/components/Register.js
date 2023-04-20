@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { signUp } from "@/slices/auth";
+import { useRouter } from "next/router";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,8 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  const router = useRouter();
+
   const onSubmit = (data) => {
     const { username, password, email } = data;
     const authoritie = 1;
@@ -20,6 +23,7 @@ const Register = () => {
       .then((r) => {
         console.log("---del respuesta----");
         console.log(r);
+        router.push("./login");
       })
       .catch((ee) => {
         console.log(ee);
@@ -64,7 +68,7 @@ const Register = () => {
 
               {errors.email && (
                 <div className="alert alert-danger" role="alert">
-                  este campoe es requerido!
+                  este campo es requerido!
                 </div>
               )}
             </div>
