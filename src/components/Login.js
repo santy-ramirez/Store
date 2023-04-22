@@ -29,11 +29,6 @@ const Login = () => {
   }, [isLoggedIn]);
   const dispatch = useDispatch();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    setLoading(true);
-  };
   const onSubmit = (data) => {
     console.log(data);
     const { username, password } = data;

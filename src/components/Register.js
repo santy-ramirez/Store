@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { signUp } from "@/slices/auth";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -91,6 +92,7 @@ const Register = () => {
             </div>
           </div>
         </form>
+        <Link href="/login">login</Link>
       </div>
     </div>
   );

@@ -13,12 +13,16 @@ function Botum() {
     push("/login");
   };
   return (
-    <div>
-      Botum
-      <button onClick={headleDeslogarse} className="btn btn-primary btn-block">
-        deslogarse
-      </button>
-    </div>
+    <>
+      {isLoggedIn && (
+        <button
+          onClick={headleDeslogarse}
+          className="btn btn-primary btn-block"
+        >
+          Logout
+        </button>
+      )}
+    </>
   );
 }
 
