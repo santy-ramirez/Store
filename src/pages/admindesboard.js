@@ -1,22 +1,20 @@
-import LeftNavbar from "@/components/LeftNavbar";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import React from "react";
-import PerfilAdmin from "@/components/PerfilAdmin";
-
+import { useSelector, useDispatch } from "react-redux";
 function admindesboard() {
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
+
   return (
-    <Container>
-      <Row>
-        <h2>admindesboard</h2>
-        <PerfilAdmin />
-      </Row>
-      <Row>
-        <LeftNavbar />
-        <h2>hola</h2>
-      </Row>
-    </Container>
+    <>
+      {isLoggedIn && (
+        <Container>
+          <Row>
+            <h2>admindesboard: hola admin</h2>
+          </Row>
+        </Container>
+      )}
+    </>
   );
 }
 

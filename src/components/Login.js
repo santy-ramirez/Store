@@ -24,7 +24,9 @@ const Login = () => {
   }
   useEffect(() => {
     if (isLoggedIn) {
-      push("/admindesboard");
+      user.authorities.map((a) => {
+        a.authority == "ADMIN" ? push("/admindesboard") : push("/userdesboard");
+      });
     }
   }, [isLoggedIn]);
   const dispatch = useDispatch();

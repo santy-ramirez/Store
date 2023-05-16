@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
 import AuthService from "../services/authService";
 
 if (typeof window !== "undefined") {
