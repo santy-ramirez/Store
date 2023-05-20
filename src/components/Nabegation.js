@@ -53,7 +53,7 @@ function Nabegation() {
                     </Navbar.Text>
                   );
                 })}
-                : {user.user}{" "}
+                : {user.user}
               </Navbar.Text>
               <Navbar.Text onClick={headleDeslogarse}>Logout</Navbar.Text>
             </>
