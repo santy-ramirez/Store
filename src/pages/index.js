@@ -2,13 +2,16 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
-import { Col, Container, Navbar, Row } from "react-bootstrap";
+import { Col, Navbar, Row } from "react-bootstrap";
 const inter = Inter({ subsets: ["latin"] });
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Navbr from "@/components/Navbr";
 import Hero from "@/components/Hero";
+import AddProduct from "@/components/AddProduct";
+import GetAllProducts from "@/components/GetAllProducts";
+import { Center, Container } from "@chakra-ui/react";
 
 export default function Home() {
   const { push } = useRouter();
@@ -25,7 +28,12 @@ export default function Home() {
         </Head>
         <Navbr />
         <main className={styles.main}>
-          <Hero isLoggedIn={isLoggedIn} />
+          <Container maxW={"8xl"}>
+            <Hero isLoggedIn={isLoggedIn} />
+            <Center>
+              <GetAllProducts />
+            </Center>
+          </Container>
         </main>
       </>
     </>

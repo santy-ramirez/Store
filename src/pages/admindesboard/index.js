@@ -31,6 +31,7 @@ import { Stack, HStack, VStack } from "@chakra-ui/react";
 
 import Head from "next/head";
 import SidebarWithHeader from "@/components/SidebarWithHeader";
+import AddProduct from "@/components/AddProduct";
 
 function admindesboard() {
   const { isLoggedIn, user } = useSelector((state) => state.auth);
@@ -84,6 +85,7 @@ function admindesboard() {
                 <button onClick={() => setUrl(null)}>Remove</button>
               </div>
             )}
+            <AddProduct/>
           </VStack>
         </SidebarWithHeader>
       )}
