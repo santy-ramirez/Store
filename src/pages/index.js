@@ -2,11 +2,12 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Navbar, Row } from "react-bootstrap";
 const inter = Inter({ subsets: ["latin"] });
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Navbr from "@/components/Navbr";
 
 export default function Home() {
   const { push } = useRouter();
@@ -21,6 +22,7 @@ export default function Home() {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
+        <Navbr />
         <main className={styles.main}>
           <Container>
             <h1>hello index. home page</h1>
