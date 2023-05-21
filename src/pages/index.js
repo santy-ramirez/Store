@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Navbr from "@/components/Navbr";
+import Hero from "@/components/Hero";
 
 export default function Home() {
   const { push } = useRouter();
@@ -24,23 +25,7 @@ export default function Home() {
         </Head>
         <Navbr />
         <main className={styles.main}>
-          <Container>
-            <h1>hello index. home page</h1>
-            {!isLoggedIn ? (
-              <Row>
-                <Col>
-                  <Link href="/register">registrarme</Link>
-                </Col>
-                <Col>
-                  <Link href="/login">Ya tengo una cuenta</Link>
-                </Col>
-              </Row>
-            ) : (
-              <Row>
-                <h2>usted ya se encuentra logeado</h2>
-              </Row>
-            )}
-          </Container>
+          <Hero isLoggedIn={isLoggedIn} />
         </main>
       </>
     </>
