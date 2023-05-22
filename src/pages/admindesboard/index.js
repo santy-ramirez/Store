@@ -35,24 +35,6 @@ import AddProduct from "@/components/AddProduct";
 
 function admindesboard() {
   const { isLoggedIn, user } = useSelector((state) => state.auth);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [url, setUrl] = useState("");
-
-  async function uploadFile() {
-    const data = new FormData();
-    data.append("image", selectedImage);
-    const url = `https://api.imgbb.com/1/upload?key=`;
-    const upload = await fetch(url, {
-      method: "POST",
-      body: data,
-    })
-      .then((r) => r.json())
-      .then((r) => setUrl(r.data.url));
-
-    return upload?.data?.url;
-  }
 
   return (
     <>
@@ -68,24 +50,7 @@ function admindesboard() {
           <VStack>
             <h2>admindesboard: hola admin</h2>
 
-            <input
-              type="file"
-              name="myImage"
-              onChange={(event) => {
-                console.log(event.target.files[0]);
-                setSelectedImage(event.target.files[0]);
-              }}
-            />
-            <input type="submit" value="enviar" onClick={uploadFile} />
-
-            {url && (
-              <div>
-                <img alt="not found" width={"250px"} src={url} />
-                <br />
-                <button onClick={() => setUrl(null)}>Remove</button>
-              </div>
-            )}
-            <AddProduct/>
+            <AddProduct />
           </VStack>
         </SidebarWithHeader>
       )}
