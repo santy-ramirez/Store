@@ -49,7 +49,6 @@ function admindesboard() {
         <SidebarWithHeader>
           <VStack>
             <h2>admindesboard: hola admin</h2>
-
             <AddProduct />
           </VStack>
         </SidebarWithHeader>

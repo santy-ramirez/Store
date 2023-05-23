@@ -8,7 +8,14 @@ import {
   Image,
 } from "@chakra-ui/react";
 
-export default function ProductSimple({ name, price, category, IMAGE }) {
+export default function ProductSimple({
+  name,
+  price,
+  category,
+  IMAGE,
+  deleProduct,
+  delete1,
+}) {
   return (
     <Center py={12}>
       <Box
@@ -68,6 +75,16 @@ export default function ProductSimple({ name, price, category, IMAGE }) {
               $199
             </Text>
           </Stack>
+          <Text
+            onClick={deleProduct}
+            textDecoration={"line-through"}
+            color={"gray.800"}
+          >
+            delete
+          </Text>
+          <Text>
+            {delete1 != true ? "no esta eliminado" : "esta eliminado"}
+          </Text>
         </Stack>
       </Box>
     </Center>

@@ -1,29 +1,126 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "@/slices/product";
-import { Content } from "next/font/google";
+import { getAllProducts, deleteProduct } from "@/slices/product";
 import ProductSimple from "./ProductSimple";
-import { Center, Wrap } from "@chakra-ui/react";
-
+import { Center, HStack, VStack, Wrap } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
+import { Pagination } from "react-bootstrap";
 const IMAGE =
   "https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80";
 
 function GetAllProducts() {
-  const [datos, setDatos] = useState({});
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const [pageNo, setPageNo] = useState("1");
+  const [sortDir, setSorDir] = useState("asc");
+  const [deleted, setDeleted] = useState(false);
+
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.product);
   useEffect(() => {
-    dispatch(getAllProducts());
-  }, []);
+    dispatch(getAllProducts({ sortDir, pageNo }));
+  }, [sortDir, pageNo, deleted]);
+
+  const onSubmit = (data) => {
+    console.log(data);
+    const { pageNo, sortDir } = data;
+    dispatch(getAllProducts({ sortDir, pageNo }));
+    setPageNo(pageNo);
+    setSorDir(setSorDir);
+  };
+  const handleDeleteProduct = (id) => {
+    dispatch(deleteProduct({ id })).then((r) => {
+      setDeleted(true);
+    });
+    setDeleted(false);
+  };
+
+  const totalpages = products.totalPages;
+  console.log(products);
+  console.log(totalpages);
+
+  let active = pageNo;
+  let items = [];
+  for (let number = 1; number <= totalpages; number++) {
+    items.push(
+      <Pagination.Item
+        onClick={() => setPageNo(number)}
+        key={number}
+        active={number === active}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
 
   return (
-    <Wrap>
-      {products?.content.map((a, index) => (
-        <div key={index}>
-          <ProductSimple name={a.name} category={a.category} />
-        </div>
-      ))}
-    </Wrap>
+    <>
+      <VStack>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <div className="form-group">
+              <label htmlFor="username">sortDir</label>
+              <input
+                {...register("sortDir")}
+                type="text"
+                className="form-control"
+                name="sortDir"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">pageNo</label>
+              <input
+                {...register("pageNo")}
+                type="text"
+                className="form-control"
+                name="pageNo"
+              />
+            </div>
+
+            <div className="form-group">
+              <button type="submit" className="btn btn-primary btn-block">
+                filtrar y buscar
+              </button>
+            </div>
+          </div>
+        </form>
+        <Wrap>
+          {products?.content.map((a, index) => {
+            return (
+              <div key={index}>
+                <ProductSimple
+                  name={a.name}
+                  category={a.category}
+                  IMAGE={a.image}
+                  delete1={a.softDelete}
+                  deleProduct={() => handleDeleteProduct(a.id)}
+                />
+              </div>
+            );
+          })}
+        </Wrap>
+        <Pagination size="lg">
+          <Pagination.First onClick={() => setPageNo(1)} />
+          {pageNo != 1 ? (
+            <Pagination.Prev onClick={() => setPageNo(pageNo - 1)} />
+          ) : (
+            <Pagination.Prev disabled />
+          )}
+          {items}
+          {pageNo - totalpages != 0 ? (
+            <Pagination.Next onClick={() => setPageNo(pageNo + 1)} />
+          ) : (
+            <Pagination.Next disabled />
+          )}
+          <Pagination.Last onClick={() => setPageNo(totalpages)} />
+        </Pagination>
+      </VStack>
+    </>
   );
 }
 

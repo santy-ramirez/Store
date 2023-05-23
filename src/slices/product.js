@@ -16,6 +16,11 @@ const products = {
   last: false,
   content: [product],
 };
+const productDeleted = {
+  delete: "",
+  product: product,
+};
+
 export const addProduct = createAsyncThunk(
   "product/addProduct",
   async ({ name, category, image, price, description }, thunkAPI) => {
@@ -47,9 +52,9 @@ export const addProduct = createAsyncThunk(
 
 export const getAllProducts = createAsyncThunk(
   "product/getAllProducts",
-  async () => {
+  async ({ sortDir, pageNo }) => {
     try {
-      const response = await ProductService.getAllProducts();
+      const response = await ProductService.getAllProducts(sortDir, pageNo);
 
       return response.data;
     } catch (error) {
@@ -58,7 +63,20 @@ export const getAllProducts = createAsyncThunk(
   }
 );
 
-const initialState = { product, products };
+export const deleteProduct = createAsyncThunk(
+  "product/deleteProduct",
+  async ({ id }) => {
+    try {
+      const response = await ProductService.deleteProduct(id);
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+const initialState = { product, products, productDeleted };
 
 const productSlice = createSlice({
   name: "product",
@@ -75,6 +93,12 @@ const productSlice = createSlice({
     },
     [getAllProducts.rejected]: (state, action) => {
       state.products = action.error;
+    },
+    [deleteProduct.fulfilled]: (state, action) => {
+      state.productDeleted = action.payload;
+    },
+    [deleteProduct.rejected]: (state, action) => {
+      state.productDeleted = action.error;
     },
   },
 });
