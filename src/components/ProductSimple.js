@@ -7,6 +7,8 @@ import {
   Stack,
   Image,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function ProductSimple({
   name,
@@ -14,8 +16,16 @@ export default function ProductSimple({
   category,
   IMAGE,
   deleProduct,
-  delete1,
+
+  addCard,
 }) {
+  const [rol, setRol] = useState("epa");
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log(user.authorities.map((a) => setRol(a.authority)));
+    }
+  }, []);
   return (
     <Center py={12}>
       <Box
@@ -75,15 +85,21 @@ export default function ProductSimple({
               $199
             </Text>
           </Stack>
+          {rol == "ADMIN" && (
+            <Text
+              onClick={deleProduct}
+              textDecoration={"line-through"}
+              color={"gray.800"}
+            >
+              delete
+            </Text>
+          )}
           <Text
-            onClick={deleProduct}
+            onClick={addCard}
             textDecoration={"line-through"}
             color={"gray.800"}
           >
-            delete
-          </Text>
-          <Text>
-            {delete1 != true ? "no esta eliminado" : "esta eliminado"}
+            add card
           </Text>
         </Stack>
       </Box>

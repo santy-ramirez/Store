@@ -18,8 +18,9 @@ const products = {
 };
 const productDeleted = {
   delete: "",
-  product: product,
+  productId: 0,
 };
+const cardPay = [];
 
 export const addProduct = createAsyncThunk(
   "product/addProduct",
@@ -76,11 +77,16 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
-const initialState = { product, products, productDeleted };
+const initialState = { product, products, productDeleted, cardPay };
 
 const productSlice = createSlice({
   name: "product",
   initialState,
+  reducers: {
+    addCard: (state, action) => {
+      state.cardPay.push(action.payload);
+    },
+  },
   extraReducers: {
     [addProduct.fulfilled]: (state, action) => {
       state.product = action.payload;
@@ -104,4 +110,5 @@ const productSlice = createSlice({
 });
 
 const { reducer } = productSlice;
+export const { addCard } = productSlice.actions;
 export default reducer;

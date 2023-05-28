@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts, deleteProduct } from "@/slices/product";
+import { addCard } from "../slices/product";
 import ProductSimple from "./ProductSimple";
 import { Center, HStack, VStack, Wrap } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
@@ -15,15 +16,24 @@ function GetAllProducts() {
     watch,
     formState: { errors },
   } = useForm();
+  const { products } = useSelector((state) => state.product);
   const [pageNo, setPageNo] = useState("1");
   const [sortDir, setSorDir] = useState("asc");
   const [deleted, setDeleted] = useState(false);
 
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.product);
+
+  const { cardPay } = useSelector((state) => state.product);
+  const { productDeleted } = useSelector((state) => state.product);
+
   useEffect(() => {
+    console.log("antes del fech");
     dispatch(getAllProducts({ sortDir, pageNo }));
-  }, [sortDir, pageNo, deleted]);
+    console.log("despues del fech");
+  }, [pageNo, sortDir, deleted]);
+  console.log(products);
+  console.log(cardPay);
+  console.log(productDeleted);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -38,10 +48,11 @@ function GetAllProducts() {
     });
     setDeleted(false);
   };
+  const handleAddCard = (p) => {
+    dispatch(addCard(p));
+  };
 
   const totalpages = products.totalPages;
-  console.log(products);
-  console.log(totalpages);
 
   let active = pageNo;
   let items = [];
@@ -97,8 +108,8 @@ function GetAllProducts() {
                   name={a.name}
                   category={a.category}
                   IMAGE={a.image}
-                  delete1={a.softDelete}
                   deleProduct={() => handleDeleteProduct(a.id)}
+                  addCard={() => handleAddCard(a)}
                 />
               </div>
             );

@@ -10,6 +10,7 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Stack,
   Text,
   useColorModeValue,
   useDisclosure,
@@ -19,11 +20,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { FiBell, FiChevronDown, FiCircle, FiMenu } from "react-icons/fi";
+import { MdShoppingCart } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../slices/auth";
 function Navbr({ onOpen, ...rest }) {
   const [rol, setRol] = useState("epa");
   const { isLoggedIn, user } = useSelector((state) => state.auth);
+  const { cardPay } = useSelector((state) => state.product);
+
   const { push } = useRouter();
   console.log(rol);
   const dispatch = useDispatch();
@@ -83,12 +87,14 @@ function Navbr({ onOpen, ...rest }) {
           </Link>
 
           <HStack spacing={{ base: "0", md: "6" }}>
-            {/* <IconButton
-            size="lg"
-            variant="ghost"
-            aria-label="open menu"
-            icon={<FiBell />}
-          /> */}
+            <IconButton
+              size="lg"
+              variant="ghost"
+              aria-label="open menu"
+              icon={<MdShoppingCart />}
+            />
+            <Text>{cardPay.length} </Text>
+
             <Flex alignItems={"center"}>
               <Menu>
                 <MenuButton
