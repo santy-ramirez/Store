@@ -15,7 +15,18 @@ import {
   useColorModeValue,
   useDisclosure,
   VStack,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  Portal,
 } from "@chakra-ui/react";
+
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -23,10 +34,14 @@ import { FiBell, FiChevronDown, FiCircle, FiMenu } from "react-icons/fi";
 import { MdShoppingCart } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../slices/auth";
+import CarShoping from "./CarShoping";
+
 function Navbr({ onOpen, ...rest }) {
   const [rol, setRol] = useState("epa");
   const { isLoggedIn, user } = useSelector((state) => state.auth);
   const { cardPay } = useSelector((state) => state.product);
+
+  const btnRef = React.useRef();
 
   const { push } = useRouter();
   console.log(rol);
@@ -85,16 +100,8 @@ function Navbr({ onOpen, ...rest }) {
               Store
             </Text>
           </Link>
-
           <HStack spacing={{ base: "0", md: "6" }}>
-            <IconButton
-              size="lg"
-              variant="ghost"
-              aria-label="open menu"
-              icon={<MdShoppingCart />}
-            />
-            <Text>{cardPay.length} </Text>
-
+            <CarShoping cardPay={cardPay} />
             <Flex alignItems={"center"}>
               <Menu>
                 <MenuButton
