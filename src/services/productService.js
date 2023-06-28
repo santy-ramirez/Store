@@ -17,8 +17,10 @@ const saveProduct = (name, category, image, price, description) => {
   );
 };
 
-const getAllProducts = (sortDir, page) => {
-  return axios.get(API_URL + `?sortDir=${sortDir}` + `&pageNo=${page}`);
+const getAllProducts = (sortDir, page, orderBy) => {
+  return axios.get(
+    API_URL + `?sortDir=${sortDir}` + `&page=${page}` + `&sortBy=${orderBy}`
+  );
 };
 
 const deleteProduct = (id) => {

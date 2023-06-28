@@ -53,9 +53,13 @@ export const addProduct = createAsyncThunk(
 
 export const getAllProducts = createAsyncThunk(
   "product/getAllProducts",
-  async ({ sortDir, pageNo }) => {
+  async ({ sortDir, pageNo, orderBy }) => {
     try {
-      const response = await ProductService.getAllProducts(sortDir, pageNo);
+      const response = await ProductService.getAllProducts(
+        sortDir,
+        pageNo,
+        orderBy
+      );
 
       return response.data;
     } catch (error) {

@@ -3,7 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts, deleteProduct } from "@/slices/product";
 import { addCard } from "../slices/product";
 import ProductSimple from "./ProductSimple";
-import { Center, HStack, VStack, Wrap } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  FormControl,
+  FormLabel,
+  HStack,
+  Select,
+  Stack,
+  VStack,
+  Wrap,
+} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { Pagination } from "react-bootstrap";
 const IMAGE =
@@ -19,6 +29,7 @@ function GetAllProducts() {
   const { products } = useSelector((state) => state.product);
   const [pageNo, setPageNo] = useState("1");
   const [sortDir, setSorDir] = useState("asc");
+  const [orderBy, setOrderBy] = useState("id");
   const [deleted, setDeleted] = useState(false);
 
   const dispatch = useDispatch();
@@ -27,9 +38,7 @@ function GetAllProducts() {
   const { productDeleted } = useSelector((state) => state.product);
 
   useEffect(() => {
-    console.log("antes del fech");
-    dispatch(getAllProducts({ sortDir, pageNo }));
-    console.log("despues del fech");
+    dispatch(getAllProducts({ sortDir, pageNo, orderBy }));
   }, [pageNo, sortDir, deleted]);
   console.log(products);
   console.log(cardPay);
@@ -37,10 +46,10 @@ function GetAllProducts() {
 
   const onSubmit = (data) => {
     console.log(data);
-    const { pageNo, sortDir } = data;
-    dispatch(getAllProducts({ sortDir, pageNo }));
-    setPageNo(pageNo);
+    const { sortDir, orderBy } = data;
+    dispatch(getAllProducts({ sortDir, orderBy }));
     setSorDir(setSorDir);
+    setOrderBy(orderBy);
   };
   const handleDeleteProduct = (id) => {
     dispatch(deleteProduct({ id })).then((r) => {
@@ -52,7 +61,7 @@ function GetAllProducts() {
     dispatch(addCard(p));
   };
 
-  const totalpages = products.totalPages;
+  const totalpages = products ? products.totalPages : 0;
 
   let active = pageNo;
   let items = [];
@@ -71,35 +80,30 @@ function GetAllProducts() {
   return (
     <>
       <VStack>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <div className="form-group">
-              <label htmlFor="username">sortDir</label>
-              <input
-                {...register("sortDir")}
-                type="text"
-                className="form-control"
-                name="sortDir"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password">pageNo</label>
-              <input
-                {...register("pageNo")}
-                type="text"
-                className="form-control"
-                name="pageNo"
-              />
-            </div>
-
-            <div className="form-group">
-              <button type="submit" className="btn btn-primary btn-block">
-                filtrar y buscar
-              </button>
-            </div>
-          </div>
-        </form>
+        <FormControl onSubmit={handleSubmit(onSubmit)} as="form">
+          <FormLabel as="legend">Filter and serach products</FormLabel>
+          <Stack spacing="24px">
+            <Select
+              name="sortDir"
+              {...register("sortDir")}
+              placeholder="Ordenar de manera desc or asc"
+            >
+              <option value="asc">asc</option>
+              <option value="desc">desc </option>
+            </Select>
+            <Select
+              name="orderBy"
+              {...register("orderBy")}
+              placeholder="Order By"
+            >
+              <option value="name">name</option>
+              <option value="id">id </option>
+            </Select>
+          </Stack>
+          <Button type="submit" colorScheme="blue">
+            Filtrar y buscar
+          </Button>
+        </FormControl>
         <Wrap>
           {products?.content.map((a, index) => {
             return (

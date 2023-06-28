@@ -34,11 +34,11 @@ import {
 } from "react-icons/fi";
 import Navbr from "./Navbr";
 import Link from "next/link";
-const URI_BASE = "admindesboard";
+const URI_BASE = "/admindesboard";
 const LinkItems = [
   { name: "Inicio", icon: FiHome, url: "/" },
-  { name: "Trending", icon: FiTrendingUp, url: `${URI_BASE}/Trending` },
-  { name: "home", icon: FiCompass, url: `${URI_BASE}/home` },
+  { name: "Add Products", icon: FiTrendingUp, url: `${URI_BASE}` },
+  { name: "All Products", icon: FiCompass, url: `${URI_BASE}/products` },
   { name: "Favourites", icon: FiStar, url: `${URI_BASE}/fav` },
   { name: "Settings", icon: FiSettings, url: `${URI_BASE}/esa` },
 ];

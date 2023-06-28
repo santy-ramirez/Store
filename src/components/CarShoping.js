@@ -1,5 +1,10 @@
 import {
   Button,
+  Card,
+  CardBody,
+  CardFooter,
+  Heading,
+  HStack,
   IconButton,
   Popover,
   PopoverArrow,
@@ -10,12 +15,22 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Portal,
+  Stack,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import Image from "next/image";
+
+import React, { useMemo } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { MdShoppingCart } from "react-icons/md";
 
 function CarShoping({ cardPay }) {
+  const [total, setTotal] = useState(0);
+  useMemo(() => {
+    cardPay.map((product) => setTotal(product.price + total));
+  }, [cardPay]);
+
   return (
     <Popover>
       <PopoverTrigger>
@@ -36,10 +51,26 @@ function CarShoping({ cardPay }) {
           <PopoverCloseButton />
           <PopoverBody>
             {cardPay.map((a, i) => (
-              <Text key={i}> {a.name}</Text>
+              <HStack>
+                <Image
+                  size="sm"
+                  width={50}
+                  height={20}
+                  src={a.image}
+                  alt="Caffe Latte"
+                />
+                <Stack>
+                  <Text size="sm" py="2">
+                    {a.category}
+                  </Text>
+                  <Text size="sm" py="2">
+                    ${a.price}
+                  </Text>
+                </Stack>
+              </HStack>
             ))}
           </PopoverBody>
-          <PopoverFooter>This is the footer</PopoverFooter>
+          <PopoverFooter>total:{total} </PopoverFooter>
         </PopoverContent>
       </Portal>
     </Popover>

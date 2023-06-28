@@ -2,8 +2,9 @@ import React from "react";
 import styles from "@/styles/Home.module.css";
 import Head from "next/head";
 import SidebarWithHeader from "@/components/SidebarWithHeader";
+import GetAllProducts from "@/components/GetAllProducts";
 
-function home() {
+function products() {
   return (
     <div>
       <Head>
@@ -14,10 +15,11 @@ function home() {
       </Head>
 
       <SidebarWithHeader>
-        <h1>home</h1>
+        <h1>All products</h1>
+        <GetAllProducts />
       </SidebarWithHeader>
     </div>
   );
 }
 
-export default home;
+export default products;
